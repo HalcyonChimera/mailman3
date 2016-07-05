@@ -1,1 +1,1 @@
-# mailman3asd
+# mailman3 Dokerfile and configuration for the OSF
