@@ -1,1 +1,5 @@
-# mailman3 Dokerfile and configuration for the OSF
+# mailman3
+
+Dockerfile and configuration as applicable for the OSF.
+
+
