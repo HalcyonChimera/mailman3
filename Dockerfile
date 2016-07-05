@@ -39,8 +39,6 @@ RUN buildout
 # Expose ports
 EXPOSE 18000
 EXPOSE 8001
-EXPOSE 9000
-EXPOSE 9001
 
 ENTRYPOINT \
     
