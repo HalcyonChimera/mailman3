@@ -1,0 +1,11 @@
+#! /bin/bash
+
+cd /mailman3/mailman-bundler
+buildout
+
+rsync -av /mailman3/config/ / 
+
+./bin/mailman-post-update && \
+./bin/mailman start && \
+./bin/mailman-web-django-admin runserver 0.0.0.0:18000 
+
