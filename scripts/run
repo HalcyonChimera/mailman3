@@ -1,17 +1,35 @@
 #! /bin/bash
 
-rsync -av /mailman3/config/ /
-su - postgres
-createdb mailmanweb
-psql -c "CREATE USER mailmanweb WITH PASSWORD 'change-this-password'"
-psql -c "GRANT ALL PRIVILEDGES ON DATABASE 'mailmanweb' TO 'mailmanweb'"
-
+echo '================================================================================'
+echo ''
+echo 'Mailman3 Server for The Open Science Framework'
+echo 'Maintained by Joshua Bird'
+echo '================================================================================'
+echo ''
+echo 'Starting Postgresql Server'
+/etc/init.d/postgresql start
+echo ''
+apt-get install -y sudo
+sudo -u postgres createdb mailmanweb
+sudo -u postgres psql -c "CREATE USER mailmanweb WITH PASSWORD 'change-this-password';"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE mailmanweb TO mailmanweb;"
+echo ''
+echo '================================================================================'
+echo ''
+echo 'Configuring Hostnames'
 echo `awk 'END{print $1}' /etc/hosts` mailman.local >> /etc/hosts
-
+echo ''
+echo '================================================================================'
 cd /mailman3/mailman-bundler
 pip install psycopg2
 buildout install gunicorn
 buildout
+
+echo '================================================================================'
+echo ''
+echo 'Applying Configuration'
+rsync -av /mailman3/config/ /
+echo ''
 
 ./bin/mailman-post-update
 ./bin/mailman start --force
