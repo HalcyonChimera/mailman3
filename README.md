@@ -2,7 +2,7 @@
 
 Dockerfile and configuration as applicable for the OSF.
 
-# Setup
+## Setup
 
 - Ensure docker and docker-compose are configured and installed correctly
 - `# docker-compose up`
