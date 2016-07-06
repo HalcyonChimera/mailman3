@@ -3,7 +3,7 @@
 cd /mailman3/mailman-bundler
 buildout
 
-rsync -av /mailman3/config/ / 
+#rsync -av /mailman3/config/ / 
 
 ./bin/mailman-post-update && \
 ./bin/mailman start && \
