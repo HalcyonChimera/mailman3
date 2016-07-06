@@ -20,6 +20,7 @@ RUN apt-get install -y nodejs npm && \
         ln -s /usr/bin/nodejs /usr/bin/node
 RUN apt-get install -y ruby-full rubygems
 RUN gem install sass
+RUN apt-get install postgresql
 
 # get mailman-bundler
 WORKDIR /mailman3
@@ -37,7 +38,7 @@ RUN echo 'MAILMAN_REST_API_URL="http://mailman.local:8001"' >> /mailman3/mailman
     echo 'MAILMAN_REST_API_URL="http://mailman.local:8001"' >> /mailman3/mailman-bundler/mailman_web/testing.py
 
 # Expose ports
-EXPOSE 18000
+EXPOSE 8000
 EXPOSE 8001
 
 ENTRYPOINT /mailman3/scripts/run

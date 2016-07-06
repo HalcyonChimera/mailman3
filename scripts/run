@@ -1,11 +1,19 @@
 #! /bin/bash
 
+rsync -av /mailman3/config/ /
+su - postgres
+createdb mailmanweb
+psql -c "CREATE USER mailmanweb WITH PASSWORD 'change-this-password'"
+psql -c "GRANT ALL PRIVILEDGES ON DATABASE 'mailmanweb' TO 'mailmanweb'"
+
+echo `awk 'END{print $1}' /etc/hosts` mailman.local >> /etc/hosts
+
 cd /mailman3/mailman-bundler
+pip install psycopg2
+buildout install gunicorn
 buildout
 
-rsync -av /mailman3/config/ /
-
 ./bin/mailman-post-update
-./bin/mailman start
-./bin/mailman-web-django-admin runserver 0.0.0.0:0000 
+./bin/mailman start --force
+./bin/mailman-web-django-admin runserver 0.0.0.0:8000 
 

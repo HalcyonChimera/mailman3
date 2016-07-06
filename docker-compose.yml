@@ -2,7 +2,7 @@ mailman:
     build: .
     ports:
         - '0.0.0.0:18000:8000'
-        - '0.0.0.0:8001:18001'
+        - '0.0.0.0:8001:8001'
     volumes:
         - ./config/:/mailman3/config
         - ./scripts/:/mailman3/scripts
