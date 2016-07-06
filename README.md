@@ -2,7 +2,7 @@
 
 Dockerfile and configuration as applicable for the OSF.
 
-> ### TODO
+> #### Incomplete
 
 > - Move postgres to an external container
 > - Consolidate configuration options for mailman3, mailman-bundler, and postfix
