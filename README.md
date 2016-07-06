@@ -10,7 +10,7 @@ Dockerfile and configuration as applicable for the OSF.
 ## Information
 
 This container is configured here por production.
-- Mailman is set up to use gunicorn as it's wsgi server
+- Mailman is set up to use gunicorn as the WSGI server.
 
 ## Setup
 
