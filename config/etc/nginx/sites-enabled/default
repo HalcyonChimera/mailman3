@@ -1,5 +1,5 @@
 server {
-        listen 8001;
+        listen 18001;
         server_name mailman.local;
         location / {
                 proxy_pass http://localhost:8001;
@@ -8,9 +8,9 @@ server {
         }
 }
 
-server {
-        listen 18000;
-        location / {
-                proxy_pass http://localhost:8000;
-        }
-}
+#server {
+#        listen 18000;
+#        location / {
+#                proxy_pass http://localhost:8000;
+#        }
+#}
