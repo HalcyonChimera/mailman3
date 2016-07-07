@@ -33,7 +33,7 @@ echo ''
 
 ./bin/mailman-post-update
 ./bin/mailman start --force
-./bin/mailman-web-django-admin runserver 0.0.0.0:8000 
+./bin/gunicorn mailman_web.wsgi:application
 ./bin/mailman-web-django-admin createsuperuser << CREATE
 
 joshua.thomas.bird@gmail.com
