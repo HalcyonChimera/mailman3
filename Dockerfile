@@ -10,8 +10,6 @@ MAINTAINER Joshua Bird
 RUN apt-get update
 RUN apt-get install -y nginx
 
-#RUN curl https://raw.githubusercontent.com/HalcyonChimera/mailman3/master/config/etc/nginx/sites-enabled/default > /etc/nginx/sites-enabled/default
-
 RUN apt-get install -y rsync bash
 RUN apt-get install -y vim
 RUN apt-get install -y git python3.4-dev python-dev python-pip python-virtualenv
@@ -32,10 +30,6 @@ WORKDIR /mailman3/mailman-bundler
 RUN buildout
 RUN virtualenv venv
 RUN . venv/bin/activate
-#RUN curl https://raw.githubusercontent.com/HalcyonChimera/mailman3/master/config/mailman3/mailman-bundler/venv-3.4/lib/python3.4/site-packages/mailman/config/schema.cfg > /mailman3/mailman-bundler/venv-3.4/lib/python3.4/site-packages/mailman/config/schema.cfg
-
-RUN echo 'MAILMAN_REST_API_URL="http://mailman.local:8001"' >> /mailman3/mailman-bundler/mailman_web/production.py && \
-    echo 'MAILMAN_REST_API_URL="http://mailman.local:8001"' >> /mailman3/mailman-bundler/mailman_web/testing.py
 
 # Expose ports
 EXPOSE 8000

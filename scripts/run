@@ -21,9 +21,9 @@ echo `awk 'END{print $1}' /etc/hosts` mailman.local >> /etc/hosts
 echo ''
 echo '================================================================================'
 cd /mailman3/mailman-bundler
-#pip install psycopg2
-#buildout install gunicorn
+pip install psycopg2
 buildout
+buildout install gunicorn
 
 echo '================================================================================'
 echo ''
@@ -33,13 +33,21 @@ echo ''
 
 ./bin/mailman-post-update
 ./bin/mailman start --force
-#./bin/gunicorn mailman_web.wsgi:application
-./bin/mailman-web-django-admin createsuperuser << EOF
+apt-get install -y expect
+expect<<EOF 
+spawn ./bin/mailman-web-django-admin createsuperuser
+expect "*: "
+send -- "\n"
+expect "*: "
+send -- "joshua.thomas.bird@gmail.com"
+expect "*: "
+send -- "cCzuv0HNT9aerIbl"
+expect "*: "
+send -- "cCzuv0HNT9aerIbl"
+expect eof
+EOF 
 
-joshua.thomas.bird@gmail.com
-cCzuv0HNT9aerIbl
-cCzuv0HNT9aerIbl
-EOF
-
-./bin/mailman-web-django-admin runserver 0.0.0.0:8000
+./bin/gunicorn -b 0.0.0.0:8000 mailman_web.wsgi:application
+nginx
+#./bin/mailman-web-django-admin runserver 0.0.0.0:8000
 
