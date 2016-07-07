@@ -21,10 +21,10 @@ ADMINS = (
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["localhost", "mechanysm.com", "*"]
 # And for BrowserID too, see
 # http://django-browserid.rtfd.org/page/user/settings.html#django.conf.settings.BROWSERID_AUDIENCES
-BROWSERID_AUDIENCES = [ "http://localhost", "http://localhost:8000" ]
+BROWSERID_AUDIENCES = [ "http://localhost", "http://localhost:8000", "http://mechanysm.com:18000", "http://mechanysm.com:8000" ]
 
 # Mailman API credentials
 MAILMAN_REST_API_URL = 'http://mailman.local:8001'
@@ -382,7 +382,7 @@ USE_INTERNAL_AUTH = False
 
 # Use SSL when logged in. You need to enable the SSLRedirect middleware for
 # this feature to work.
-#USE_SSL = True
+USE_SSL = False
 
 # Only display mailing-lists from the same virtual host as the webserver
 FILTER_VHOST = False
