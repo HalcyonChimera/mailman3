@@ -331,15 +331,20 @@ LOGGING = {
         #},
         'django.request': {
             'handlers': ['file'],
-            'level': 'ERROR',
+            'level': 'INFO',
             'propagate': True,
         },
         'django': {
             'handlers': ['file'],
-            'level': 'ERROR',
+            'level': 'INFO',
             'propagate': True,
         },
         'hyperkitty': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'postorius': {
             'handlers': ['file'],
             'level': 'INFO',
             'propagate': True,
@@ -378,7 +383,7 @@ APP_NAME = 'Mailing-list archives'
 
 # Allow authentication with the internal user database?
 # By default, only a login through Persona or your email provider is allowed.
-USE_INTERNAL_AUTH = False
+USE_INTERNAL_AUTH = True
 
 # Use SSL when logged in. You need to enable the SSLRedirect middleware for
 # this feature to work.

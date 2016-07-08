@@ -5,7 +5,7 @@ server {
 
         location /static {
                 autoindex on;
-                root /var/spool/mailman-web/static;
+                root /var/spool/mailman-web;
         }
         
         location / {
