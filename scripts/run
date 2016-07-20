@@ -20,6 +20,8 @@ echo 'Configuring Hostnames'
 echo `awk 'END{print $1}' /etc/hosts` mailman.local >> /etc/hosts
 echo ''
 echo '================================================================================'
+
+
 cd /mailman3/mailman-bundler
 rsync -av /mailman3/config/ /
 /etc/init.d/nginx start
@@ -49,7 +51,8 @@ expect eof
 LFDS
 
 ./bin/mailman-post-update
-./bin/mailman restart
+./bin/mailman stop
+./bin/mailman start --force
 
 
 ./bin/gunicorn -b 0.0.0.0:8000 mailman_web.wsgi:application

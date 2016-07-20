@@ -7,6 +7,8 @@ daemon_directory = /usr/lib/postfix
 ### Interface to listen on
 inet_interfaces = all
 
+
+
 ### smtp banner
 mail_name = OSF Mail Daemon
 smtpd_banner = $mail_name. All Spam Is Reported. ESMTP
@@ -33,9 +35,7 @@ alias_database = hash:/etc/aliases
 ### the internet hostname of this mail system
 myhostname = mechanysm
 mydomain = mechanysm.com
-myorigin = $mydomain
-
-relayhost =
+myorigin = $myhostname
 
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 virtual_mailbox_domains = energy-foundation.org npenergyfoundation.org npenergychoice.org discourse.mechanysm.com mechanysm.com
@@ -47,10 +47,11 @@ virtual_gid_maps = static:7788
 
 ### The mydestination parameter specifies what domains this machine will deliver locally, instead
 ### of forwarding to another machine. The default is to receive mail for the machine itself.
-mydestination = mechanysm.com
+mydestination = lists.mechanysm.com
 
 ### External Networks to accept RELAYED mail from.
-#mynetworks = 127.0.0.0/8
+#mynetworks = 0.0.0.0/0
+mynetworks_style = host
 
 ### Where to send mail that is delivered locally.
 #mailbox_command = procmail -a "$EXTENSION"
@@ -102,18 +103,21 @@ allow_percent_hack = no
 #### user!domain != user@domain
 swap_bangpath = no
 
-smtpd_sasl_type = dovecot
-smtpd_sasl_path = private/auth
-smtpd_sasl_auth_enable = no
+#smtpd_sasl_type = dovecot
+#smtpd_sasl_path = private/auth
+#smtpd_sasl_auth_enable = no
 
-smtpd_tls_cert_file = /etc/ssl/certs/mechanysm.crt
-smtpd_tls_key_file = /etc/ssl/private/mechanysm.key
-smtpd_use_tls = yes
+smtpd_tls_cert_file = /etc/ssl/lists.mechanysm.com.crt
+smtpd_tls_key_file = /etc/ssl/lists.mechanysm.com.key
+#smtpd_tls_CAfile = /etc/ssl/cacert.pem
 smtpd_tls_auth_only = yes
-smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
-smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
-smtpd_tls_security_level = may
+#smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+#smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_tls_security_level = none
 smtpd_tls_protocols = !SSLv2, !SSLv3
+tls_random_source = dev:/dev/urandom
+
+smtpd_tls_loglevel = 3
 
 local_recipient_maps = proxy:unix:passwd.byname $alias_maps
 
@@ -146,21 +150,22 @@ local_recipient_maps = proxy:unix:passwd.byname $alias_maps
 #unverified_sender_reject_code = 554
 
 ### SMTP Restrictions
-#smtpd_client_restrictions = 
+smtpd_client_restrictions = 
 #	permit_mynetworks, 
 #	permit_sasl_authenticated,
 #	reject_invalid_hostname, 
 #	reject_rbl_client zen.spamhaus.org, 
 #	reject_unknown_client, 
-#	permit
+	permit
 
 #smtpd_helo_restrictions = 
 #	permit
 
 smtpd_recipient_restrictions = 
-	permit_sasl_authenticated, 
-	permit_mynetworks,
-	reject_unauth_destination
+	#permit_sasl_authenticated, 
+	#permit_mynetworks,
+	#reject_unauth_destination
+	permit
 
 #smtpd_sender_restrictions = 
 #	permit_mynetworks, 
@@ -181,10 +186,14 @@ smtpd_recipient_restrictions =
 #####################  END  #####################################################
 readme_directory = /usr/share/doc/postfix
 html_directory = /usr/share/doc/postfix/html
-smtpd_relay_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination
+smtpd_relay_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, permit
+
+transport_maps = hash:/mailman3/mailman-bundler/var/data/postfix_lmtp
+local_recipient_maps = hash:/mailman3/mailman-bundler/var/data/postfix_lmtp
+relay_domains = hash:/mailman3/mailman-bundler/var/data/postfix_domains
 
 smtp_sasl_auth_enable = yes 
-smtp_sasl_password_maps = static:USERNAME:PASSWORD
+smtp_sasl_password_maps = static:halcyonchimera:8426133AWasdpiybG568
 smtp_sasl_security_options = noanonymous 
 smtp_tls_security_level = encrypt
 header_size_limit = 4096000

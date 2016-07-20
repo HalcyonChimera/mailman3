@@ -19,6 +19,7 @@ RUN apt-get install -y nodejs npm && \
 RUN apt-get install -y ruby-full rubygems
 RUN gem install sass
 RUN apt-get install -y postgresql
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postfix
 
 # get mailman-bundler
 WORKDIR /mailman3
