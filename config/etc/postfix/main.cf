@@ -119,7 +119,7 @@ tls_random_source = dev:/dev/urandom
 
 smtpd_tls_loglevel = 3
 
-local_recipient_maps = proxy:unix:passwd.byname $alias_maps
+#local_recipient_maps = proxy:unix:passwd.byname $alias_maps
 
 ### Tarpit until RCPT TO: to reject the email for nagios compatability
 #smtpd_delay_reject = yes
@@ -186,7 +186,7 @@ smtpd_recipient_restrictions =
 #####################  END  #####################################################
 readme_directory = /usr/share/doc/postfix
 html_directory = /usr/share/doc/postfix/html
-smtpd_relay_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, permit
+smtpd_relay_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination
 
 transport_maps = hash:/mailman3/mailman-bundler/var/data/postfix_lmtp
 local_recipient_maps = hash:/mailman3/mailman-bundler/var/data/postfix_lmtp
