@@ -33,8 +33,6 @@ echo ''
 echo 'Applying Configuration'
 echo ''
 buildout install gunicorn
-./bin/mailman-post-update
-./bin/mailman start --force
 
 apt-get install -y expect
 expect <<LFDS
@@ -51,8 +49,7 @@ expect eof
 LFDS
 
 ./bin/mailman-post-update
-./bin/mailman stop
-./bin/mailman start --force
+./bin/mailman start
 
 
 ./bin/gunicorn -b 0.0.0.0:8000 mailman_web.wsgi:application
